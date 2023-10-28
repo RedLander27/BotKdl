@@ -1,0 +1,21 @@
+import discord
+from discord.ext import commands
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return  # Evita que el bot responda a sus propios mensajes
+
+    if message.content.lower() == 'hola':
+        await message.channel.send('Hola, como estas?')
+
+bot.run("Token")
